@@ -1,18 +1,22 @@
 // Routes des SMS
 RT = require('./lib/Routes-consts.js'); // Constantes
 
-exports.ping = {
-	command: "ping",
-
+exports.foo = {
+	command: "foo",
 	access: RT.ALL,
-
-	response: RT.bypass("foo")
+	response: RT.exec("foo")
 }
 
-exports.foo = {
-	command:"foo",
-	access: RT.NONE,
-	response: "bar"
+
+exports.ping = {
+	command: "ping",
+	response: "Pong !"
+}
+
+exports.about = {
+	command: "about",
+	aliases: ["version", "galibot"],
+	response: "Hey :)"
 }
 
 

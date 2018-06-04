@@ -26,12 +26,15 @@ Debug.success("'exec' loaded.");
 var GHD = require('github-download');
 Debug.success("'github-download' loaded.");
 
+var NoSQL = require('nosql');
+Debug.success("'nosql' loaded.");
+
 var AutoUpdate = require('./lib/AutoUpdate.js');
 AutoUpdate.init(Config.APP_githubRepo, APP_currentFolder);
 Debug.success("'*AutoUpdate' loaded.");
 
 var DB = require('./lib/DB.js');
-DB.init(Config.DB_hostname, Config.DB_password, Config.DB_ip);
+DB.init(Config.DB_hostname, Config.DB_username, Config.DB_password, Config.DB_database);
 Debug.success("'*DB' loaded.");
 
 var SMS = require('./lib/SMS.js');
@@ -46,13 +49,19 @@ var Routes = require('./lib/Routes.js');
 Routes.init();
 Debug.success("'*Routes' loaded.");
 
-// Interprétation
-function interpretSMS(from, message) {
-	
+// Traitement d'un message
+function execute(from, time, message) {
+	let res = Routes.exec(from, time, message);
+	if(res != undefined)
+		SMS.sendMessageTo(res, from);
 }
 
 APP_readyTime = Date.now(); // Enregistrement de l'heure
 Debug.success("GaliBot successfully loaded.");
 console.log('------------------------------------------------------');
 
-console.log(Routes.exec("ping"));
+
+execute("+33604199481", Date.now(), "foo");
+
+DB.close();
+

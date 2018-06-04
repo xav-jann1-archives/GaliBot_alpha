@@ -10,6 +10,7 @@ exports.APP_githubRepo = "GalileoCPE/GaliBot.git#production"
 exports.SIM_pin = "1234";
 
 // Base de données
-exports.DB_hostname = "";
-exports.DB_password = "";
-exports.DB_ip = "";
+exports.DB_hostname = "ds247077.mlab.com:47077";
+exports.DB_username = "pierre";
+exports.DB_password = "galileo2018";
+exports.DB_database = "galibot";
