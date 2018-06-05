@@ -10,11 +10,12 @@ exports.foo = {
 
 exports.ping = {
 	command: "ping",
-	response: "Pong !"
+	response: RT.bypass("about")
 }
 
 exports.about = {
 	command: "about",
+	access: RT.NONE,
 	aliases: ["version", "galibot"],
 	response: "Hey :)"
 }

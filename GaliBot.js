@@ -61,7 +61,7 @@ Debug.success("GaliBot successfully loaded.");
 console.log('------------------------------------------------------');
 
 
-execute("+33604199481", Date.now(), "foo");
+execute("+33604199481", Date.now(), "foosfgdf");
 
 DB.close();
 
