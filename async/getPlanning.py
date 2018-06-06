@@ -105,7 +105,7 @@ def show(html):
             print "----------"
             print " " + elem['contenu']
             print "----------"
-        elif elem['contenu'][:6].upper() == "GROUPE":
+        elif elem['contenu'][:6].upper() == "GRA":
             print " "
             print "/" + elem['contenu']
         else:
