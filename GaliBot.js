@@ -60,7 +60,7 @@ SMS.on('new message', (idx)=>{
 	setTimeout(() => SMS.readMessage(idx).then(msg => {
 		let res = Routes.exec(msg.from, Date.now(), msg.text);
 		if(res != undefined)
-			SMS.sendMessage({to: msg.from, text: res});
+			setTimeout(() => SMS.sendMessage({to: msg.from, text: res}), 500);
 	}), 1000);
 })
 
