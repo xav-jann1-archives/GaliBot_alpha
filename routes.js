@@ -10,17 +10,16 @@ exports.foo = {
 
 exports.ping = {
 	command: "ping",
-	response: RT.bypass("about")
+	response: "pong"
 }
 
 exports.about = {
 	command: "about",
-	access: RT.NONE,
 	aliases: ["version", "galibot"],
 	response: "Hey :)"
 }
 
 
 // Messages d'erreur
-exports._unauthorized = "Commande non autorisée !";
+exports._unauthorized = "Commande non autorisee !";
 exports._invalid = "Commande invalide !";

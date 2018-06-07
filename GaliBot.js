@@ -37,7 +37,7 @@ var DB = require('./lib/DB.js');
 DB.init(Config.DB_hostname, Config.DB_username, Config.DB_password, Config.DB_database);
 Debug.success("'*DB' loaded.");
 
-const SMS_api = require('../lib/SMS.js');
+const SMS_api = require('./lib/SMS.js');
 let SMS = new SMS_api({
   port: '/dev/serial0',
   baudRate: 19200,
@@ -60,7 +60,7 @@ SMS.on('new message', (idx)=>{
 	setTimeout(() => SMS.readMessage(idx).then(msg => {
 		let res = Routes.exec(msg.from, Date.now(), msg.text);
 		if(res != undefined)
-			SMS.sendMessage({to: msg.from, text: res});
+			setTimeout(() => SMS.sendMessage({to: msg.from, text: res}), 500);
 	}), 1000);
 })
 
