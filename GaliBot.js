@@ -37,8 +37,15 @@ var DB = require('./lib/DB.js');
 DB.init(Config.DB_hostname, Config.DB_username, Config.DB_password, Config.DB_database);
 Debug.success("'*DB' loaded.");
 
-var SMS = require('./lib/SMS.js');
-SMS.init(Config.SMS_pin);
+const SMS_api = require('./lib/SMS.js');
+let SMS = new SMS_api({
+  port: '/dev/serial0',
+  baudRate: 19200,
+  pin: '1234'
+})
+SMS.init().catch(error => {
+  console.log(error);
+})
 Debug.success("'*SMS' loaded.");
 
 var Middleware = require('./lib/Middleware.js');
@@ -49,19 +56,17 @@ var Routes = require('./lib/Routes.js');
 Routes.init();
 Debug.success("'*Routes' loaded.");
 
-// Traitement d'un message
-function execute(from, time, message) {
-	let res = Routes.exec(from, time, message);
-	if(res != undefined)
-		SMS.sendMessageTo(res, from);
-}
+SMS.on('new message', (idx)=>{
+	setTimeout(() => SMS.readMessage(idx).then(msg => {
+		let res = Routes.exec(msg.from, Date.now(), msg.text);
+		if(res != undefined)
+			SMS.sendMessage({to: msg.from, text: res});
+	}), 1000);
+})
 
 APP_readyTime = Date.now(); // Enregistrement de l'heure
 Debug.success("GaliBot successfully loaded.");
 console.log('------------------------------------------------------');
 
-
-execute("+33604199481", Date.now(), "foosfgdf");
-
-DB.close();
+//DB.close();
 
