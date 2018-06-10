@@ -1,4 +1,4 @@
-/* 
+/*
  * PARAMETRES GENERAUX
  */
 var APP_version = "0.1.0";  // Version de l'application
@@ -7,11 +7,11 @@ var APP_readyTime = null;     // Timestamp de l'application prête à décoder l
 var APP_currentFolder = __dirname.split("/").pop(); // Nom du répertoire courant
 
 
-/* 
+/*
  * CHARGEMENT DES LIBRAIRIES
  */
 var Config = require('./config.js'); // Chargement de la configuration
-var Debug = require('./lib/Debug.js'); // LIB: Affichage console 
+var Debug = require('./lib/Debug.js'); // LIB: Affichage console
 
 Debug.init(APP_version);
 Debug.info("Starting application...");
@@ -56,12 +56,12 @@ var Routes = require('./lib/Routes.js');
 Routes.init();
 Debug.success("'*Routes' loaded.");
 
-SMS.on('new message', (idx)=>{
-	setTimeout(() => SMS.readMessage(idx).then(msg => {
+SMS.on('new message', idx => {
+	SMS.readMessage(idx).then(msg => {
 		let res = Routes.exec(msg.from, Date.now(), msg.text);
 		if(res != undefined)
-			setTimeout(() => SMS.sendMessage({to: msg.from, text: res}), 500);
-	}), 1000);
+			SMS.sendMessage({to: msg.from, text: res});
+  });
 })
 
 APP_readyTime = Date.now(); // Enregistrement de l'heure
@@ -69,4 +69,3 @@ Debug.success("GaliBot successfully loaded.");
 console.log('------------------------------------------------------');
 
 //DB.close();
-
