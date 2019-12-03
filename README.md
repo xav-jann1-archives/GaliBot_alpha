@@ -1,2 +1,2 @@
 # GaliBot
-Envoi des plannings et des salles de langues par SMS pour les étudiants de CPE Lyon
+Première version du GaliBot pour envoyer le planning par SMS avec un module GSM.
